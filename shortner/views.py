@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Url
 import uuid
 
@@ -17,3 +17,12 @@ def create(req):
         new_url.save()
 
         return HttpResponse(uid)
+
+
+"""
+Redirect to a page based on pk(uuid)
+"""
+def go(req, pk):
+    url_details = Url.objects.get(uuid=pk)
+
+    return redirect('https://' + url_details.link)
